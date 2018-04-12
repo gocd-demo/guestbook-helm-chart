@@ -3,38 +3,45 @@ kind: Deployment
 metadata:
   name: {{ template "guestbook.fullname" . }}-redis-slave
   labels:
-    app: {{ template "guestbook.name" . }}
+    app: {{ template "guestbook.name" . }}-redis
+    role: slave
+    tier: backend
     chart: {{ template "guestbook.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.redisSlave.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "guestbook.name" . }}
+      app: {{ template "guestbook.name" . }}-redis
+      role: slave
+      tier: backend
       release: {{ .Release.Name }}
+  replicas: {{ .Values.redisSlave.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ template "guestbook.name" . }}
+        app: {{ template "guestbook.name" . }}-redis
+        role: slave
+        tier: backend
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}-redis-master
+        - name: {{ .Chart.Name }}-redis-slave
           image: "{{ .Values.redisSlave.image.repository }}:{{ .Values.redisSlave.image.tag }}"
           imagePullPolicy: {{ .Values.redisSlave.image.pullPolicy }}
+          env:
+            - name: GET_HOSTS_FROM
+              value: dns
           ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            - containerPort: 6379
+          #livenessProbe:
+          #  httpGet:
+          #    path: /
+          #    port: http
+          #readinessProbe:
+          #  httpGet:
+          #    path: /
+          #    port: http
           resources:
 {{ toYaml .Values.redisSlave.resources | indent 12 }}
     {{- with .Values.nodeSelector }}

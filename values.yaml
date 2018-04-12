@@ -7,7 +7,6 @@ redisMaster:
     pullPolicy: IfNotPresent
 
   service:
-    type: ClusterIP
     port: 6379
 
   ingress:
@@ -23,17 +22,10 @@ redisMaster:
     #    hosts:
     #      - chart-example.local
 
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #  cpu: 100m
-    #  memory: 128Mi
-    # requests:
-    #  cpu: 100m
-    #  memory: 128Mi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
 
   nodeSelector: {}
 
@@ -50,7 +42,6 @@ redisSlave:
     pullPolicy: IfNotPresent
 
   service:
-    type: ClusterIP
     port: 6379
 
   ingress:
@@ -66,17 +57,10 @@ redisSlave:
     #    hosts:
     #      - chart-example.local
 
-    resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #  cpu: 100m
-    #  memory: 128Mi
-    # requests:
-    #  cpu: 100m
-    #  memory: 128Mi
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
 
   nodeSelector: {}
 
@@ -84,3 +68,39 @@ redisSlave:
 
   affinity: {}
 
+frontend:
+  replicaCount: 3
+
+  image:
+    repository: gcr.io/google-samples/gb-frontend
+    tag: v4
+    pullPolicy: IfNotPresent
+
+  service:
+    type: LoadBalancer
+    port: 80
+  
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    path: /
+    hosts:
+      - chart-example.local
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}

@@ -3,7 +3,9 @@ kind: Service
 metadata:
   name: {{ template "guestbook.fullname" . }}-redis-master
   labels:
-    app: {{ template "guestbook.name" . }}
+    app: {{ template "guestbook.name" . }}-redis
+    role: master
+    tier: backend
     chart: {{ template "guestbook.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,10 +14,8 @@ spec:
   ports:
     - port: 6379
       targetPort: 6379
-      protocol: TCP
-      name: http
   selector:
-    app: {{ template "guestbook.name" . }}
-    release: {{ .Release.Name }}
+    app: {{ template "guestbook.name" . }}-redis
     role: master
     tier: backend
+    release: {{ .Release.Name }}
