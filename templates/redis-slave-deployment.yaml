@@ -2,20 +2,12 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: {{ template "guestbook.fullname" . }}-redis-slave
-  labels:
-    app: {{ template "guestbook.name" . }}-redis
-    role: slave
-    tier: backend
-    chart: {{ template "guestbook.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
 spec:
   selector:
     matchLabels:
       app: {{ template "guestbook.name" . }}-redis
       role: slave
       tier: backend
-      release: {{ .Release.Name }}
   replicas: {{ .Values.redisSlave.replicaCount }}
   template:
     metadata:
@@ -23,7 +15,6 @@ spec:
         app: {{ template "guestbook.name" . }}-redis
         role: slave
         tier: backend
-        release: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}-redis-slave

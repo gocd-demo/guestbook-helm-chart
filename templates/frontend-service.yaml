@@ -5,14 +5,10 @@ metadata:
   labels:
     app: {{ template "guestbook.name" . }}
     tier: frontend
-    chart: {{ template "guestbook.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
 spec:
   type: LoadBalancer
   ports:
     - port: 80
   selector:
     app: {{ template "guestbook.name" . }}
-    release: {{ .Release.Name }}
     tier: frontend

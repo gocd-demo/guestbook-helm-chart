@@ -6,11 +6,7 @@ metadata:
     app: {{ template "guestbook.name" . }}-redis
     role: master
     tier: backend
-    chart: {{ template "guestbook.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
 spec:
-  type: ClusterIP 
   ports:
     - port: 6379
       targetPort: 6379
@@ -18,4 +14,4 @@ spec:
     app: {{ template "guestbook.name" . }}-redis
     role: master
     tier: backend
-    release: {{ .Release.Name }}
+ 

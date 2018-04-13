@@ -2,34 +2,24 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: {{ template "guestbook.fullname" . }}-frontend
-  labels:
-    app: {{ template "guestbook.name" . }}
-    tier: frontend
-    chart: {{ template "guestbook.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.frontend.replicaCount }}
   selector:
     matchLabels:
       app: {{ template "guestbook.name" . }}
       tier: frontend
-      release: {{ .Release.Name }}
+  replicas: {{ .Values.frontend.replicaCount }}
   template:
     metadata:
       labels:
         app: {{ template "guestbook.name" . }}
         tier: frontend 
-        release: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}-redis-frontend
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
           imagePullPolicy: {{ .Values.redisMaster.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
+            - containerPort: 80
           livenessProbe:
             httpGet:
               path: /

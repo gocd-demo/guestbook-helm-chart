@@ -3,7 +3,7 @@ redisMaster:
 
   image:
     repository: gcr.io/google_containers/redis
-    tag: latest
+    tag: e2e
     pullPolicy: IfNotPresent
 
   service:
@@ -16,7 +16,7 @@ redisMaster:
       # kubernetes.io/tls-acme: "true"
     path: /
     hosts:
-      - chart-example.local
+    #  - chart-example.local
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
