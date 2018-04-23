@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: slave
-        image: "{{ .Values.redisSlave.image.repository }}:{{ .Values.redisSlave.image.tag }}"
+        image: "{{ .Values.redisSlave.image.name }}:{{ .Values.redisSlave.image.tag }}"
         resources:
           requests:
             cpu: 100m

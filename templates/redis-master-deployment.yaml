@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: master
-        image: gcr.io/google_containers/redis:e2e  # or just image: redis
+        image: "{{ .Values.redisMaster.image.name }}:{{ .Values.redisMaster.image.tag }}"
         ports:
         - containerPort: 6379
         resources:

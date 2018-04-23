@@ -2,7 +2,7 @@ redisMaster:
   replicaCount: 1
 
   image:
-    repository: gcr.io/google_containers/redis
+    name: gcr.io/google_containers/redis
     tag: e2e
     pullPolicy: IfNotPresent
 
@@ -37,7 +37,7 @@ redisSlave:
   replicaCount: 2
 
   image:
-    repository: gcr.io/google_samples/gb-redisslave
+    name: gcr.io/google_samples/gb-redisslave
     tag: v1
     pullPolicy: IfNotPresent
 
@@ -72,7 +72,7 @@ frontend:
   replicaCount: 3
 
   image:
-    repository: gcr.io/google-samples/gb-frontend
+    name: gcr.io/google-samples/gb-frontend
     tag: v4
     pullPolicy: IfNotPresent
 
