@@ -33,4 +33,4 @@ spec:
           # uncomment the line below:
           # value: env
         ports:
-        - containerPort: 80
+        - containerPort: {{ .Values.frontend.containerPort }}

@@ -78,8 +78,10 @@ frontend:
 
   service:
     type: LoadBalancer
-    port: 80
+    port: 8080
+    targetPort: 80
   
+  containerPort: 80
 
   ingress:
     enabled: false
