@@ -36,7 +36,5 @@ spec:
           value: {{ .Values.frontend.image.name }}
         - name: DOCKER_IMAGE_TAG
           value: {{ .Values.frontend.image.tag }}
-        - name: DEPLOYED_AT
-          value: {{ time.Time.Now() }}
         ports:
         - containerPort: {{ .Values.frontend.containerPort }}
